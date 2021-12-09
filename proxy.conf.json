@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://partnerapi.funda.nl/feeds/Aanbod.svc/",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
