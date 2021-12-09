@@ -67,8 +67,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "funda-property-angular:build:production",
-              "proxyConfig": "./proxy.conf.json"
+              "browserTarget": "funda-property-angular:build:production"
             },
             "development": {
               "browserTarget": "funda-property-angular:build:development",
