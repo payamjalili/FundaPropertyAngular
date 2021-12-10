@@ -33,8 +33,26 @@ jobs:
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm ci
-      - name: Deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Buld
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
-          npm run deploy
+          npm run build
+          
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: production-files
+        path: ./dist/funda-property-angular
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist/funda-property-angular
