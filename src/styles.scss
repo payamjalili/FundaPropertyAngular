@@ -1,4 +1,8 @@
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
 body {
   font-family: tahoma, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
+  color: #333;
 }

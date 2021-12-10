@@ -1,8 +1,21 @@
+@import "../../../variables.scss";
+
 header {
-  background-color: #f7a100;
+  background-color: $base-color;
   height: 50px;
 
   img {
-    height: 40px;
+    height: 35px;
+    margin-top: 8px;
+  }
+
+  .icon-item {
+    font-size: 21px;
+    padding-left: 10px;
+    padding-top: 5px;
+
+    .ng-fa-icon {
+      color: #fff;
+    }
   }
 }

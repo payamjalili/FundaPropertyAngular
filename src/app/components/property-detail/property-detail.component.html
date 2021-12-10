@@ -1,4 +1,138 @@
-<div *ngIf="data == undefined">Loading ...</div>
-<div *ngIf="data != undefined">
-  {{ data.Adres }}
+<div id="property-loading" *ngIf="data == undefined">
+  <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+</div>
+<div id="property-content" *ngIf="data != undefined">
+  <div class="row g-0">
+    <div
+      class="col"
+      [ngStyle]="{
+        'height.px': galleryImageHeight
+      }"
+    >
+      <div
+        class="gallery-container"
+        [ngStyle]="{
+          'width.px': getGalleryContainerWidth(),
+          'height.px': galleryImageHeight,
+          'left.px': galleryPosition
+        }"
+      >
+        <div class="gallery-item" *ngFor="let image of galleryImages">
+          <img
+            src="{{ image.MediaItems[gallerySizeIndex].UrlSecure }}"
+            alt="{{ data.Adres }}"
+            loading="lazy"
+          />
+        </div>
+      </div>
+      <div
+        class="gallery-arrow arrow-next"
+        [ngStyle]="{
+          'top.px': galleryImageHeight / 2
+        }"
+        (click)="goNextImage()"
+        *ngIf="
+          getGalleryContainerWidth() - galleryImageWidth > galleryPosition * -1
+        "
+      >
+        <fa-icon [icon]="faChevronRight"></fa-icon>
+      </div>
+      <div
+        class="gallery-arrow arrow-prev"
+        [ngStyle]="{
+          'top.px': galleryImageHeight / 2
+        }"
+        (click)="goPrevImage()"
+        *ngIf="galleryPosition < 0"
+      >
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+      </div>
+    </div>
+  </div>
+  <div class="media-container container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="media-body d-flex justify-content-center">
+          <div class="media-item">
+            <fa-icon [icon]="faImages"></fa-icon>
+            <span class="title">Foto's</span>
+            <span class="count">39</span>
+          </div>
+          <div class="media-item">
+            <fa-icon [icon]="faVectorSquare"></fa-icon>
+            <span class="title">Plattegrond</span>
+            <span class="count">4</span>
+          </div>
+          <div class="media-item">
+            <fa-icon [icon]="faRedoAlt"></fa-icon>
+            <span class="title">360° foto's</span>
+            <span class="count">18</span>
+          </div>
+          <div class="media-item">
+            <fa-icon [icon]="faPlay"></fa-icon>
+            <span class="title">Video</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col">
+        <h1>
+          <span class="main-title">{{ data.Adres }}</span>
+          <span class="sub-title">{{ data.Postcode }} {{ data.Plaats }} </span>
+        </h1>
+        <div class="property-area d-flex">
+          <div class="area-item">
+            <fa-icon [icon]="faVectorSquare"></fa-icon>
+            {{ data.WoonOppervlakte }} m² <span>wonen</span>
+          </div>
+          <div class="area-item">
+            <fa-icon [icon]="faSquare"></fa-icon>
+            {{ data.PerceelOppervlakte }} m² <span>perceel</span>
+          </div>
+        </div>
+        <div class="property-price" [innerHtml]="data.PrijsGeformatteerd"></div>
+        <div
+          class="description"
+          [ngClass]="{
+            'show-less': !showMore
+          }"
+        >
+          <h3>Omschrijving</h3>
+          <div class="content" [innerText]="data.VolledigeOmschrijving"></div>
+          <div class="show-more" *ngIf="!showMore" (click)="showMore = true">
+            + Lees de volledige omschrijving
+          </div>
+        </div>
+
+        <div class="kenmerkens">
+          <h3>Kenmerken</h3>
+          <div class="kenmerken-item" *ngFor="let kenmerken of data.Kenmerken">
+            <div class="kenmerken-title">{{ kenmerken.Titel }}</div>
+            <div
+              class="kenmerken-items d-flex"
+              *ngFor="let kenmerkenItem of kenmerken.Kenmerken"
+            >
+              <div class="kenmerken-items-title">{{ kenmerkenItem.Naam }}</div>
+              <div
+                class="kenmerken-items-value"
+                [innerHtml]="kenmerkenItem.Waarde"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="map-container">
+          <google-map></google-map>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
