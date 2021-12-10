@@ -37,6 +37,7 @@ jobs:
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm run build
+          ls
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
